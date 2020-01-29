@@ -39,31 +39,31 @@ uint8_t CRC8_LOOKUP_TABLE[256] = {
 };
 
 crossfire_sensor_t sensors[] = {
-		{CRSF_FRAMETYPE_LINK,        0, UNIT_DB,                0, "RX_RSSI1"},
-		{CRSF_FRAMETYPE_LINK,        1, UNIT_DB,                0, "RX_RSSI2"},
-		{CRSF_FRAMETYPE_LINK,        2, UNIT_PERCENT,           0, "RX_QUALITY"},
-		{CRSF_FRAMETYPE_LINK,        3, UNIT_DB,                0, "RX_SNR"},
-		{CRSF_FRAMETYPE_LINK,        4, UNIT_RAW,               0, "ANTENNA"},
-		{CRSF_FRAMETYPE_LINK,        5, UNIT_RAW,               0, "RF_MODE"},
-		{CRSF_FRAMETYPE_LINK,        6, UNIT_MILLIWATTS,        0, "TX_POWER"},
-		{CRSF_FRAMETYPE_LINK,        7, UNIT_DB,                0, "TX_RSSI"},
-		{CRSF_FRAMETYPE_LINK,        8, UNIT_PERCENT,           0, "TX_QUALITY"},
-		{CRSF_FRAMETYPE_LINK,        9, UNIT_DB,                0, "TX_SNR"},
-		{CRSF_FRAMETYPE_BATTERY,     0, UNIT_VOLTS,             1, "BATT"},
-		{CRSF_FRAMETYPE_BATTERY,     1, UNIT_AMPS,              1, "CURR"},
-		{CRSF_FRAMETYPE_BATTERY,     2, UNIT_MAH,               0, "CAPACITY"},
-		{CRSF_FRAMETYPE_GPS,         0, UNIT_GPS_LATITUDE,      0, "GPS"},
-		{CRSF_FRAMETYPE_GPS,         0, UNIT_GPS_LONGITUDE,     0, "GPS"},
-		{CRSF_FRAMETYPE_GPS,         2, UNIT_KMH,               1, "GSPD"},
-		{CRSF_FRAMETYPE_GPS,         3, UNIT_DEGREE,            3, "HDG"},
-		{CRSF_FRAMETYPE_GPS,         4, UNIT_METERS,            0, "ALT"},
-		{CRSF_FRAMETYPE_GPS,         5, UNIT_RAW,               0, "SATELLITES"},
-		{CRSF_FRAMETYPE_ATTITUDE,    0, UNIT_RADIANS,           3, "PITCH"},
-		{CRSF_FRAMETYPE_ATTITUDE,    1, UNIT_RADIANS,           3, "ROLL"},
-		{CRSF_FRAMETYPE_ATTITUDE,    2, UNIT_RADIANS,           3, "YAW"},
-		{CRSF_FRAMETYPE_FLIGHT_MODE, 0, UNIT_TEXT,              0, "FLIGHT_MODE"},
-		{CRSF_FRAMETYPE_VARIO,       0, UNIT_METERS_PER_SECOND, 2, "VSPD"},
-		{0,                          0, UNIT_RAW,               0, "UNKNOWN"},
+		{CRSF_FRAMETYPE_LINK,        0, UNIT_DB,                0, "RX_RSSI1",    0},
+		{CRSF_FRAMETYPE_LINK,        1, UNIT_DB,                0, "RX_RSSI2",    0},
+		{CRSF_FRAMETYPE_LINK,        2, UNIT_PERCENT,           0, "RX_QUALITY",  0},
+		{CRSF_FRAMETYPE_LINK,        3, UNIT_DB,                0, "RX_SNR",      0},
+		{CRSF_FRAMETYPE_LINK,        4, UNIT_RAW,               0, "ANTENNA",     0},
+		{CRSF_FRAMETYPE_LINK,        5, UNIT_RAW,               0, "RF_MODE",     0},
+		{CRSF_FRAMETYPE_LINK,        6, UNIT_MILLIWATTS,        0, "TX_POWER",    0},
+		{CRSF_FRAMETYPE_LINK,        7, UNIT_DB,                0, "TX_RSSI",     0},
+		{CRSF_FRAMETYPE_LINK,        8, UNIT_PERCENT,           0, "TX_QUALITY",  0},
+		{CRSF_FRAMETYPE_LINK,        9, UNIT_DB,                0, "TX_SNR",      0},
+		{CRSF_FRAMETYPE_BATTERY,     0, UNIT_VOLTS,             1, "BATT",        0},
+		{CRSF_FRAMETYPE_BATTERY,     1, UNIT_AMPS,              1, "CURR",        0},
+		{CRSF_FRAMETYPE_BATTERY,     2, UNIT_MAH,               0, "CAPACITY",    0},
+		{CRSF_FRAMETYPE_GPS,         0, UNIT_GPS_LATITUDE,      0, "GPS",         0},
+		{CRSF_FRAMETYPE_GPS,         0, UNIT_GPS_LONGITUDE,     0, "GPS",         0},
+		{CRSF_FRAMETYPE_GPS,         2, UNIT_KMH,               1, "GSPD",        0},
+		{CRSF_FRAMETYPE_GPS,         3, UNIT_DEGREE,            3, "HDG",         0},
+		{CRSF_FRAMETYPE_GPS,         4, UNIT_METERS,            0, "ALT",         0},
+		{CRSF_FRAMETYPE_GPS,         5, UNIT_RAW,               0, "SATELLITES",  0},
+		{CRSF_FRAMETYPE_ATTITUDE,    0, UNIT_RADIANS,           3, "PITCH",       0},
+		{CRSF_FRAMETYPE_ATTITUDE,    1, UNIT_RADIANS,           3, "ROLL",        0},
+		{CRSF_FRAMETYPE_ATTITUDE,    2, UNIT_RADIANS,           3, "YAW",         0},
+		{CRSF_FRAMETYPE_FLIGHT_MODE, 0, UNIT_TEXT,              0, "FLIGHT_MODE", 0},
+		{CRSF_FRAMETYPE_VARIO,       0, UNIT_METERS_PER_SECOND, 2, "VSPD",        0},
+		{0,                          0, UNIT_RAW,               0, "UNKNOWN",     0},
 };
 
 
@@ -84,7 +84,7 @@ bool crsf_telemetry_checksum() {
 bool crsf_telemetry_get_value(int N, size_t index, int &value) {
 	bool result = false;
 	uint8_t *byte = &crsf_telemetry_buffer[index];
-	value =  (int)*byte & 0x80 ? -1 : 0;
+	value = (int) *byte & 0x80 ? -1 : 0;
 	for (size_t i = 0; N > i; i++) {
 		value <<= 8;
 		if (*byte != 0xff) {
